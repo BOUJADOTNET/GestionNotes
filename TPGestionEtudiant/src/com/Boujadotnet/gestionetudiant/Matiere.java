@@ -1,23 +1,21 @@
 package com.Boujadotnet.gestionetudiant;
 
-public class Matier {
-
-	
+public class Matiere {
 
 	 private int CodeMatire ;
 	 private String Designation ;
 	 private String volume;
 	 
-	  public Matier(int codeMatire, String designation, String volume) {
+	public Matiere(int codeMatire, String designation, String volume) {
 		super();
 		CodeMatire = codeMatire;
 		Designation = designation;
 		this.volume = volume;
-	  }
+	}
 	  	
-	 public Matier() {
+	public Matiere() {
 			
-		}
+	}
 	 
 	public int getCodeMatire() {
 		return CodeMatire;
