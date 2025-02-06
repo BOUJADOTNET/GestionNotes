@@ -1,11 +1,13 @@
 package com.Boujadotnet.gestionetudiant;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class GestionNotes {
 	
@@ -81,4 +83,70 @@ public class GestionNotes {
 	    	
 	    }
 	    
+	    public Etudiant consulterEtudiantById(int idPers)
+	    {
+	    	String Sql = "SELECT * FROM etudiants WHERE code = ? ";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		stmt.setInt(1, idPers);
+	    		try (ResultSet rs = stmt.executeQuery()) {
+	                if (rs.next()) {
+	                    return new Etudiant(
+	                        rs.getInt("code"),
+	                        rs.getString("nom"),
+	                        rs.getString("prenom"),
+	                        rs.getString("adresse"),
+	                        rs.getString("telephone")
+	                    );
+	                }
+	                else {
+	                    // If no matching student is found
+	                	
+	                    System.out.println("Student with id " + idPers + " does not exist.");
+	                }
+	            }
+	    		
+	    		
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
+	    	return null;
+	    	
+	    }
+	    public Etudiant consulterMatiereById(String codeMatiere)
+	    {
+	    	String Sql = "Select * from matieres where id ?";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		stmt.setString(1, codeMatiere);
+	    		try (ResultSet rs = stmt.executeQuery()) {
+	                if (rs.next()) {
+	                    return new Etudiant(
+	                        rs.getString("code"),
+	                        rs.getString("designation"),
+	                        rs.getString("volume_horaire")
+	                       /// rs.getString("adresse"),
+	                        //rs.getString("telephone")
+	                    );
+	                }
+	                else {
+	                    // If no matching student is found
+	                	
+	                    System.out.println("Student with id " + codeMatiere + " does not exist.");
+	                }
+	            }
+	    		
+	    		
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
+	    	return null;
+	    	
+	    }
 }
