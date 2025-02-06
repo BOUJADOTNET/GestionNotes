@@ -2,11 +2,11 @@ package com.Boujadotnet.gestionetudiant;
 
 public class Matiere {
 
-	 private int CodeMatire ;
+	 private String CodeMatire ;
 	 private String Designation ;
 	 private String volume;
 	 
-	public Matiere(int codeMatire, String designation, String volume) {
+	public Matiere(String codeMatire, String designation, String volume) {
 		super();
 		CodeMatire = codeMatire;
 		Designation = designation;
@@ -16,12 +16,13 @@ public class Matiere {
 	public Matiere() {
 			
 	}
-	 
-	public int getCodeMatire() {
+
+
+	public String getCodeMatire() {
 		return CodeMatire;
 	}
 
-	public void setCodeMatire(int codeMatire) {
+	public void setCodeMatire(String codeMatire) {
 		CodeMatire = codeMatire;
 	}
 

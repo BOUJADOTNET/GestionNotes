@@ -4,25 +4,20 @@ package com.Boujadotnet.gestionetudiant;
 	
 public class Note {
 	
-	
 		private int idNote;
 		private Matiere matiere;
 		private Etudiant etudiant;
 		private double note;
 	
 		
-		public Note(int idNote, Matiere matiere, Etudiant etudiant, double note) {
+		public Note( Etudiant etudiant, Matiere matiere,  double note) {
 			super();
-			this.idNote = idNote;
+			//this.idNote = idNote;
 			this.matiere = matiere;
 			this.etudiant = etudiant;
 			this.note = note;
 		}
 		
-		public Note ()
-		{
-			
-		}
 		public int getIdNote() {
 			return idNote;
 		}
