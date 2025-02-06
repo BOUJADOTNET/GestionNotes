@@ -39,12 +39,8 @@ public class Etudiant {
 		this.telPhone = telPhone;
 	}
 	
-	public Etudiant ()
-	{
-		
-	}
 	
-	public Etudiant(int idPers, String firstName, String lastName, String address, String telPhone) {
+	public Etudiant(int idPers ,String firstName, String lastName, String address, String telPhone) {
 		super();
 		this.idPers = idPers;
 		this.firstName = firstName;
@@ -52,5 +48,7 @@ public class Etudiant {
 		this.address = address;
 		this.telPhone = telPhone;
 	}
+
+
 	
 }
