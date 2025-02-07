@@ -45,7 +45,7 @@ public class GestionNotes {
 		}
 	    
 	    public void addMatiere(Matiere matiere) {
-	    	String sql = "INSERT INTO matieres (code, designation, volume_horaire) VALUES (?, ?, ?)";
+	    	String sql = "INSERT INTO matieres (codeMatiere, designation, volume_horaire) VALUES (?, ?, ?)";
 
 	        try (Connection conn = ConnectionHelper.getConnection();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -68,7 +68,7 @@ public class GestionNotes {
 	    
 	    public void addNote(Note note)
 	    {
-	    	String query = "INSERT INTO Notes ( code_etudiant ,code_matiere, valeur) VALUES (?,?, ?)";
+	    	String query = "INSERT INTO Notes (codeEtudiant  ,codeMatiere , valeur) VALUES (?,?, ?)";
 	        try (Connection conn = ConnectionHelper.getConnection(); 	
 	        		PreparedStatement stmt = conn.prepareStatement(query)) {
 	            stmt.setInt(1, note.getEtudiant().getIdPers());
@@ -85,7 +85,7 @@ public class GestionNotes {
 	    
 	    public Etudiant consulterEtudiantById(int idPers)
 	    {
-	    	String Sql = "SELECT * FROM etudiants WHERE code = ? ";
+	    	String Sql = "SELECT * FROM etudiants WHERE codeEtudiant = ? ";
 	    	try (Connection conn = ConnectionHelper.getConnection();
 	    			PreparedStatement stmt = conn.prepareStatement(Sql)
 	    			) {
@@ -93,7 +93,7 @@ public class GestionNotes {
 	    		try (ResultSet rs = stmt.executeQuery()) {
 	                if (rs.next()) {
 	                    return new Etudiant(
-	                        rs.getInt("code"),
+	                        rs.getInt("codeEtudiant"),
 	                        rs.getString("nom"),
 	                        rs.getString("prenom"),
 	                        rs.getString("adresse"),
@@ -116,21 +116,20 @@ public class GestionNotes {
 	    	return null;
 	    	
 	    }
-	    public Etudiant consulterMatiereById(String codeMatiere)
+	    public Matiere consulterMatiereById(String codeMatiere)
 	    {
-	    	String Sql = "Select * from matieres where id ?";
+	    	String Sql = "Select * from matieres where codeMatiere =?";
 	    	try (Connection conn = ConnectionHelper.getConnection();
 	    			PreparedStatement stmt = conn.prepareStatement(Sql)
 	    			) {
 	    		stmt.setString(1, codeMatiere);
 	    		try (ResultSet rs = stmt.executeQuery()) {
 	                if (rs.next()) {
-	                    return new Etudiant(
-	                        rs.getString("code"),
+	                    return new Matiere(
+	                        rs.getString("codeMatiere"),
 	                        rs.getString("designation"),
 	                        rs.getString("volume_horaire")
-	                       /// rs.getString("adresse"),
-	                        //rs.getString("telephone")
+	                   
 	                    );
 	                }
 	                else {
@@ -148,5 +147,60 @@ public class GestionNotes {
 			}
 	    	return null;
 	    	
+	    }
+	   
+	    public List<Etudiant> AllEtudiant ()
+	    {
+	    	List<Etudiant> etudiants= new ArrayList<>();
+	    	String Sql = "SELECT * FROM etudiants ";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		//stmt.setInt(1, idPers);
+	    		try (ResultSet rs = stmt.executeQuery()) {
+	                while (rs.next()) {
+	                	 etudiants.add(new Etudiant(
+	                			 rs.getInt("codeEtudiant"),
+	                			 rs.getString("nom"),
+	                             rs.getString("prenom"),
+	                             rs.getString("adresse"),
+	                             rs.getString("telephone")
+	                         ));
+	                }
+	                
+	            }
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
+	    	return etudiants ;
+	    }
+	    public List<Matiere> AllMatiere () 
+	    {
+	    	List<Matiere> matieres= new ArrayList<>();
+	    	String Sql = "SELECT * FROM matieres ";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		//stmt.setInt(1, idPers);
+	    		try (ResultSet rs = stmt.executeQuery()) {
+	                while (rs.next()) {
+	                	matieres.add(new Matiere(
+	                			// rs.getInt("codeEtudiant"),
+	                			 rs.getString(1),
+	                             rs.getString(2),
+	                             rs.getString(3)
+	                            // rs.getString("telephone")
+	                         ));
+	                }
+	                
+	            }
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
+	    	return matieres ;
 	    }
 }
