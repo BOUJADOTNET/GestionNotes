@@ -1,4 +1,7 @@
 package com.Boujadotnet.gestionetudiant;
+
+import java.util.List;
+
 public class Menu {
 	
 
@@ -16,10 +19,22 @@ public static void main(String[] args) {
 		
       ////////////////////Insert Into Table Etudiant and Matiere and Note //////////////////////////
 		
-Etudiant findByIdEtudiant =	gestionNotes.consulterEtudiantById(34);
+Etudiant findByIdEtudiant =	gestionNotes.consulterEtudiantById(6);
 	System.out.println("Nom :"+findByIdEtudiant.getFirstName()+" ||penom :" + findByIdEtudiant.getLastName()+"|| Adresse :"+findByIdEtudiant.getAddress()+"|| Telephone :"+findByIdEtudiant.getTelPhone());
 	
-	Matiere findByIdMatiere =	gestionNotes.consulterMatiereById("");
-	System.out.println("Nom :"+findByIdEtudiant.getFirstName()+" ||penom :" + findByIdEtudiant.getLastName()+"|| Adresse :"+findByIdEtudiant.getAddress()+"|| Telephone :"+findByIdEtudiant.getTelPhone());
+	Matiere findByIdMatiere =	gestionNotes.consulterMatiereById("#00003");
+	System.out.println("Code Matiere :"+findByIdMatiere.getCodeMatire()+" || Designation :" + findByIdMatiere.getDesignation()+"|| Adresse :"+findByIdMatiere.getVolume());
+	
+	List<Etudiant> findAllEtudiant = gestionNotes.AllEtudiant();
+	for (Etudiant AllEtudiant :findAllEtudiant ) 
+	{
+		System.out.println(""+AllEtudiant.getFirstName()+"|| "+AllEtudiant.getLastName()+"||"+AllEtudiant.getAddress());
+	}
+	
+	List<Matiere> findAllMatiere = gestionNotes.AllMatiere();
+	for (Matiere AllMatiere :findAllMatiere ) 
+	{
+		System.out.println(""+AllMatiere.getCodeMatire()+"|| "+AllMatiere.getDesignation()+"||"+AllMatiere.getVolume());
+	}
 }
 }
