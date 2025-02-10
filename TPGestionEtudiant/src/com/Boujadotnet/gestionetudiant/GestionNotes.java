@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GestionNotes {
+public class GestionNotes implements IGestionNotes   {
 	
 		///Ajouter un étudiant
 	  public int addEtudiant(Etudiant etudiant) {
