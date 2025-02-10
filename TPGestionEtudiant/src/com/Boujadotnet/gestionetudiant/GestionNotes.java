@@ -11,7 +11,8 @@ import java.util.List;
 
 public class GestionNotes {
 	
-	    public int addEtudiant(Etudiant etudiant) {
+		///Ajouter un étudiant
+	  public int addEtudiant(Etudiant etudiant) {
 	    	String sql = "INSERT INTO etudiants (nom, prenom, adresse, telephone) VALUES (?, ?, ?, ?)";
 
 	        try (Connection conn = ConnectionHelper.getConnection();
@@ -44,6 +45,7 @@ public class GestionNotes {
 	        return etudiant.getIdPers();  // En cas d'échec
 		}
 	    
+	    ///Ajouter une matière,
 	    public void addMatiere(Matiere matiere) {
 	    	String sql = "INSERT INTO matieres (codeMatiere, designation, volume_horaire) VALUES (?, ?, ?)";
 
@@ -66,6 +68,8 @@ public class GestionNotes {
 	        }
 	   }
 	    
+	    
+	    ///Ajouter une note d’un étudiant pour une matière données
 	    public void addNote(Note note)
 	    {
 	    	String query = "INSERT INTO Notes (codeEtudiant  ,codeMatiere , valeur) VALUES (?,?, ?)";
@@ -83,6 +87,7 @@ public class GestionNotes {
 	    	
 	    }
 	    
+	    ///Consulter un Etudiant sachant son code
 	    public Etudiant consulterEtudiantById(int idPers)
 	    {
 	    	String Sql = "SELECT * FROM etudiants WHERE codeEtudiant = ? ";
@@ -116,6 +121,8 @@ public class GestionNotes {
 	    	return null;
 	    	
 	    }
+	    
+	    ///Consulter un Matiere sachant son code
 	    public Matiere consulterMatiereById(String codeMatiere)
 	    {
 	    	String Sql = "Select * from matieres where codeMatiere =?";
@@ -148,7 +155,8 @@ public class GestionNotes {
 	    	return null;
 	    	
 	    }
-	   
+	    
+	    ///List All Etudiant
 	    public List<Etudiant> AllEtudiant ()
 	    {
 	    	List<Etudiant> etudiants= new ArrayList<>();
@@ -176,6 +184,8 @@ public class GestionNotes {
 			}
 	    	return etudiants ;
 	    }
+	    
+	    ///List All Matiere
 	    public List<Matiere> AllMatiere () 
 	    {
 	    	List<Matiere> matieres= new ArrayList<>();
@@ -202,5 +212,77 @@ public class GestionNotes {
 				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
 			}
 	    	return matieres ;
+	    }
+	    
+	    ///les notes d’un étudiant sachant son code
+	    public void showNoteEtudiantById(int code_etudiant )
+	    {
+	    	
+	    	String Sql = "SELECT code_matiere,designation,valeur FROM notes  join matieres on notes.code_matiere = matieres.code where code_etudiant = ?";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		stmt.setInt(1, code_etudiant);
+	    		
+	    		 // Si l'étudiant a des notes, les afficher
+	    		ResultSet rs = stmt.executeQuery();
+	            if (!rs.isBeforeFirst()) {
+	                System.out.println("Aucune note trouvée pour cet étudiant.");
+	            } else {
+	                while (rs.next()) {
+	                    String matiereCode = rs.getString("code_matiere");
+	                    String matiereDesignation = rs.getString("designation");
+	                    double note = rs.getDouble("valeur");
+	                    System.out.println("Code Matiere : " + matiereCode+" ||  Designation: " +matiereDesignation+"  ||  note: " +note);
+	                    System.out.println("-----------------------------");
+	                }
+	            }	    		
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
+	    }
+	    
+	    ///Supprimer un étudiant sachant son code
+	    public void deleteEtudiantByID(int code_etudiant)
+	    {
+	    	String Sql = "delete from etudiants where code = ?";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		stmt.setInt(1, code_etudiant);
+	    		stmt.executeUpdate();
+	    		 System.out.println("etudiant is delete in succes !!");
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
+	    	
+	    }
+	    
+	    ///Calculer la moyenne d’un étudiant sachant son code
+	    public void calculeMoyenne(int code_etudiant)
+	    {
+	    	String Sql = "SELECT AVG(Valeur) as average FROM notes where code_etudiant = ?";
+	    	try (Connection conn = ConnectionHelper.getConnection();
+	    			PreparedStatement stmt = conn.prepareStatement(Sql)
+	    			) {
+	    		stmt.setInt(1, code_etudiant);
+	    		
+	    		 // Si l'étudiant a des notes, les afficher
+	    		ResultSet rs = stmt.executeQuery();
+	            if (rs.next()) {
+	            	double Average = rs.getDouble(1);
+	            	Average = Math.round(Average * 100.0) / 100.0;
+	                System.out.println("Average of Etudiant || " + code_etudiant+ " ||  is : "+Average);
+	            } 
+	    		
+			} catch (Exception e) {
+				 e.printStackTrace();
+				// TODO: handle exception
+				 System.out.println("Erreur lors de l'ajout de note : " + e.getMessage());
+			}
 	    }
 }

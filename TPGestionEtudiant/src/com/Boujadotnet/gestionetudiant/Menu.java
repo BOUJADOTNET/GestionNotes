@@ -7,7 +7,7 @@ public class Menu {
 
 public static void main(String[] args) {
 	GestionNotes gestionNotes= new GestionNotes();
-	
+	/*
 	////////////////////Insert Into Table Etudiant and Matiere and Note //////////////////////////
 	 Etudiant etudiant1 = new Etudiant(1,"khalid", "karimo", "av  gjjfjk", "060606006");
 	 gestionNotes.addEtudiant(etudiant1);
@@ -19,7 +19,7 @@ public static void main(String[] args) {
 		
       ////////////////////Insert Into Table Etudiant and Matiere and Note //////////////////////////
 		
-Etudiant findByIdEtudiant =	gestionNotes.consulterEtudiantById(6);
+	Etudiant findByIdEtudiant =	gestionNotes.consulterEtudiantById(6);
 	System.out.println("Nom :"+findByIdEtudiant.getFirstName()+" ||penom :" + findByIdEtudiant.getLastName()+"|| Adresse :"+findByIdEtudiant.getAddress()+"|| Telephone :"+findByIdEtudiant.getTelPhone());
 	
 	Matiere findByIdMatiere =	gestionNotes.consulterMatiereById("#00003");
@@ -36,5 +36,10 @@ Etudiant findByIdEtudiant =	gestionNotes.consulterEtudiantById(6);
 	{
 		System.out.println(""+AllMatiere.getCodeMatire()+"|| "+AllMatiere.getDesignation()+"||"+AllMatiere.getVolume());
 	}
+	
+	gestionNotes.showNoteEtudiantById(40);
+	gestionNotes.deleteEtudiantByID(36);
+	*/
+	gestionNotes.calculeMoyenne(36);
 }
 }
